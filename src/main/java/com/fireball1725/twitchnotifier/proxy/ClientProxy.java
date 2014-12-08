@@ -8,13 +8,4 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
 
-    public Minecraft getClient() {
-        return FMLClientHandler.instance().getClient();
-    }
-
-    public void RegisterGuis() {
-        Log.debug("Register GUI");
-        Minecraft client = getClient();
-        MinecraftForge.EVENT_BUS.register(new GuiOverlayWindow(client));
-    }
 }
