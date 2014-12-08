@@ -11,7 +11,7 @@ public class PlayerEvents {
 	public void onPlayerJoinEvent(EntityJoinWorldEvent event) {
 		if (event.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)event.entity;
-			FireworkHelper.SpawnFireWork(player);
+			FireworkHelper.SpawnFireWork();
 		}
 	}
 }
