@@ -1,7 +1,7 @@
 package com.fireball1725.twitchnotifier;
 
 import com.fireball1725.twitchnotifier.events.TickEvents;
-import com.fireball1725.twitchnotifier.lib.ConfigurationHandler;
+import com.fireball1725.twitchnotifier.config.MainConfig;
 import com.fireball1725.twitchnotifier.lib.Reference;
 import com.fireball1725.twitchnotifier.proxy.IProxy;
 import com.fireball1725.twitchnotifier.util.StreamTip;
@@ -25,7 +25,7 @@ public class TwitchNotifier {
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+		MainConfig.init(event.getSuggestedConfigurationFile());
 
 		//MinecraftForge.EVENT_BUS.register(new PlayerEvents());
 	}
