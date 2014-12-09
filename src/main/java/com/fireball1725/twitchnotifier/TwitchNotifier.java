@@ -1,5 +1,6 @@
 package com.fireball1725.twitchnotifier;
 
+import com.fireball1725.twitchnotifier.events.TickEvents;
 import com.fireball1725.twitchnotifier.lib.ConfigurationHandler;
 import com.fireball1725.twitchnotifier.lib.Reference;
 import com.fireball1725.twitchnotifier.proxy.IProxy;
@@ -30,7 +31,9 @@ public class TwitchNotifier {
 	}
 
 	@Mod.EventHandler
-	public void Init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event) {
+		new TickEvents();
+
 		StreamTip streamTip = new StreamTip();
 		streamTip.Init();
 	}
