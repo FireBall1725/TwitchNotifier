@@ -17,6 +17,14 @@ public class Twitch {
     public static final URL TWITCH_SUB_URL;
     public static final URL TWITCH_FOLLOWER_URL;
 
+    public static String twitchLastSubscriberID;
+    public static String twitchLastFollowerID;
+
+    public static ArrayList<String> twitchSubscribers = new ArrayList<String>();
+    public static ArrayList<String> twitchFollowers = new ArrayList<String>();
+    public static boolean twitchInitSubscribers = true;
+    public static boolean twitchInitFollowers = true;
+
     static {
         URL tempURL;
         try {
@@ -41,61 +49,13 @@ public class Twitch {
         TWITCH_FOLLOWER_URL = tempURL;
     }
 
-    private static class twitchSubInfo implements Runnable {
-        private static final JsonParser parser = new JsonParser();
-        private static boolean checking = false;
+    public static void updateTwitch() {
+        if (ConfigTwitchSettings.twitchEnabled && (ConfigTwitchSettings.twitchShowAlertBoxSubscribe || ConfigTwitchSettings.twitchShowFireworksSubscribe)) {
+            new Thread(new TwitchSubscribers()).start();
+        }
 
-        public void run() {
-            if (checking) { return; }
-
-            checking = true;
-
-            try {
-                JsonElement node;
-                try {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(TWITCH_SUB_URL.openStream()));
-                    node = parser.parse(in);
-                    in.close();
-                } catch (Exception ex) {
-                    node = null;
-                    Log.fatal("Invalid data received from Twitch");
-                    Log.fatal(ex);
-                }
-
-                if ((node == null) || (!node.isJsonObject())) {
-                    checking = false;
-                    return;
-                }
-
-                JsonObject base = node.getAsJsonObject();
-
-                JsonArray twitchSubscribers = base.getAsJsonArray("subscriptions");
-                if (twitchSubscribers == null) {
-                    Log.warn("Twitch Subscriptions not found!");
-                    checking = false;
-                    return;
-                }
-
-                ArrayList<String> addSubs = new ArrayList();
-                String newLastSubId = null;
-                for (Iterator<JsonElement> iterator = twitchSubscribers.iterator(); iterator.hasNext();) {
-                    JsonElement sub = (JsonElement)iterator.next();
-                    if (sub.isJsonObject()) {
-                        String id = sub.getAsJsonObject().get("_id").getAsString();
-                        if (id == null) {
-                            checking = false;
-                            return;
-                        }
-                        if (newLastSubId == null) {
-                            newLastSubId = id;
-                        }
-
-                    }
-                }
-            } catch (Exception ex) {
-                Log.fatal("Unexpected error checking subscription info");
-                Log.fatal(ex);
-            }
+        if (ConfigTwitchSettings.twitchEnabled && (ConfigTwitchSettings.twitchShowAlertBoxFollow || ConfigTwitchSettings.twitchShowFireworksFollow)) {
+            new Thread(new TwitchFollowers()).start();
         }
     }
 }

@@ -3,6 +3,7 @@ package com.fireball1725.twitchnotifier.events;
 import com.fireball1725.twitchnotifier.config.ConfigTwitchSettings;
 import com.fireball1725.twitchnotifier.helper.NotificationHelper;
 import com.fireball1725.twitchnotifier.lib.Log;
+import com.fireball1725.twitchnotifier.util.Twitch;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -22,8 +23,7 @@ public class TickEvents {
             NotificationHelper.updateTick();
         } else if ((event.phase == TickEvent.Phase.END) && (++this.counter > UPDATE_TIME)) {
             this.counter = 0;
-            //TODO: Toss update to twitch, etc...
-            Log.debug("Update Tick...");
+            Twitch.updateTwitch();
         }
     }
 }
