@@ -37,6 +37,8 @@ public class ConfigurationFile {
 		ConfigTwitchSettings.twitchShowAlertBoxSubscribe = ConfigurationHelper.getBoolean(configuration, "Show Alert Box on Subscribe", "twitch", false, "Show Alert Box on new Subscriber (Only will work if Twitch partner)");
 		ConfigTwitchSettings.twitchFollowerNotificationMessage = ConfigurationHelper.getString(configuration, "New Follower Notification Message", "twitch", "New Follower!%%%USERNAME% is now following the channel!", "Message shown on Alert Box (See readme for variables)");
 		ConfigTwitchSettings.twitchSubscriberNotificationMessage = ConfigurationHelper.getString(configuration, "New Subscriber Notification Message", "twitch", "New Subscriber!%%%USERNAME% just subscribed to the channel!", "Message shown on Alert Box (See readme for variables)");
+		ConfigTwitchSettings.twitchChannelName = ConfigurationHelper.getString(configuration, "Channel Name", "twitch", "", "Your twitch channel name");
+		ConfigTwitchSettings.twitchQueryLength = ConfigurationHelper.getInt(configuration, "Query Length", "twitch", 50, "How many records to get from twitch with each query");
 
 		// AlertBox Settings
 		ConfigAlertBoxSettings.alertBox_CloseGUI = ConfigurationHelper.getBoolean(configuration, "Close GUI if open", "alertbox", true, "Close any open GUI Windows if there is a new Alert");
