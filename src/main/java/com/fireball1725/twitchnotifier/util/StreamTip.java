@@ -1,6 +1,7 @@
 package com.fireball1725.twitchnotifier.util;
 
 import com.fireball1725.twitchnotifier.config.ConfigStreamTipSettings;
+import com.fireball1725.twitchnotifier.helper.NotificationHelper;
 import com.fireball1725.twitchnotifier.lib.Log;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -51,7 +52,15 @@ public class StreamTip {
 					}
 
 					Log.info("New TIP => From: " + tipFrom + " Amount: " + tipAmount + " Note: " + tipMessage);
-					StreamEvents.newTip(tipAmount, tipFrom, tipMessage);
+
+					// Format Message
+					String notificationMessage = ConfigStreamTipSettings.streamTipNotificationMessage;
+					notificationMessage = notificationMessage.replace("%USERNAME%", tipFrom);
+					notificationMessage = notificationMessage.replace("%AMOUNT%", tipAmount);
+					notificationMessage = notificationMessage.replace("%MESSAGE%", tipMessage);
+					String finalMessage[] = notificationMessage.split("%%");
+
+					NotificationHelper.addNotification(ConfigStreamTipSettings.streamTipShowFireworks, ConfigStreamTipSettings.streamTipShowAlertBox, finalMessage);
 				}
 			});
 

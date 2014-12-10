@@ -2,11 +2,8 @@ package com.fireball1725.twitchnotifier.config;
 
 import com.fireball1725.twitchnotifier.helper.ConfigurationHelper;
 import com.fireball1725.twitchnotifier.lib.Reference;
-import com.fireball1725.twitchnotifier.reference.GuiSettings;
-import com.fireball1725.twitchnotifier.reference.StreamTipSettings;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 

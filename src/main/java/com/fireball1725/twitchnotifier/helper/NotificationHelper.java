@@ -1,5 +1,9 @@
 package com.fireball1725.twitchnotifier.helper;
 
+import com.fireball1725.twitchnotifier.config.ConfigAlertBoxSettings;
+import com.fireball1725.twitchnotifier.lib.Log;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -33,6 +37,26 @@ public class NotificationHelper {
         }
 
         notificationTag.setTag("messages", messages);
+        notificationTag.setBoolean("showFireworks", true);
+        notificationTag.setBoolean("showAlertbox", true);
+
+        addNotification(notificationTag);
+    }
+
+    public static void addNotification(Boolean showAlertBox, Boolean showFireworks, String... notificationMessages) {
+        NBTTagCompound notificationTag = new NBTTagCompound();
+        NBTTagList messages = new NBTTagList();
+        NBTTagCompound messageTag;
+
+        for (int i = 0; i < notificationMessages.length; i++) {
+            messageTag = new NBTTagCompound();
+            messageTag.setString("text", notificationMessages[i]);
+            messages.appendTag(messageTag);
+        }
+
+        notificationTag.setTag("messages", messages);
+        notificationTag.setBoolean("showFireworks", showFireworks);
+        notificationTag.setBoolean("showAlertbox", showAlertBox);
 
         addNotification(notificationTag);
     }
@@ -69,6 +93,62 @@ public class NotificationHelper {
      * Called every tick, used to handle the alerts
      */
     public static void updateTick() {
+        if (Minecraft.getMinecraft().isGamePaused()) { return; }
 
+        if (getNotificationCount() == 0) { return; }
+
+        NBTTagCompound nbtTagCompound = getTopNotification();
+
+        boolean showAlertBox = false;
+        boolean showFireworks = false;
+        int alertboxNotificationTime = ConfigAlertBoxSettings.alertBox_ShowTime;
+
+        // Get if we are showing the fireworks
+        if (nbtTagCompound.hasKey("showFireworks")) {
+            showFireworks = nbtTagCompound.getBoolean("showFireworks");
+        }
+
+        // Get if we are showing the alertbox
+        if (nbtTagCompound.hasKey("showAlertbox")) {
+            showAlertBox = nbtTagCompound.getBoolean("showAlertbox");
+        }
+
+        // Get the alertbox show time, if set
+        if (nbtTagCompound.hasKey("alertboxShowTime")) {
+            alertboxNotificationTime = nbtTagCompound.getInteger("alertboxShowTime");
+        }
+
+        if (!showAlertBox) {
+            alertboxNotificationTime = 0;
+        }
+
+        int maxNotificationTime = (alertboxNotificationTime + ConfigAlertBoxSettings.alertBox_CooldownTime) * 20;
+
+        // Check to see if notification has an age, if not create it
+        if (!nbtTagCompound.hasKey("messageAge")) {
+            nbtTagCompound.setInteger("messageAge", 0);
+
+            if (showFireworks) {
+                FireworkHelper.SpawnFireWork();
+            }
+
+            if (showAlertBox) {
+                OverlayHelper.overlayAlert = nbtTagCompound;
+            }
+        }
+
+        int messageAge = nbtTagCompound.getInteger("messageAge");
+
+        if (showAlertBox && messageAge >= alertboxNotificationTime * 20) {
+            OverlayHelper.overlayAlert = new NBTTagCompound();
+        }
+
+        if (messageAge >= maxNotificationTime) {
+            removeTopNotification();
+            return;
+        }
+
+        messageAge = messageAge + 1;
+        nbtTagCompound.setInteger("messageAge", messageAge);
     }
 }

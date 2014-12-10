@@ -8,26 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OverlayHelper extends Gui {
-    public static List<NBTTagCompound> overlayAlerts = new ArrayList<NBTTagCompound>();
+    public static NBTTagCompound overlayAlert = new NBTTagCompound();
 
     public void OverlayHelper() {}
-
-    public static void addOverlay(String... messages) {
-        NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        NBTTagList nbtTagList = new NBTTagList();
-        NBTTagCompound nbtTagCompound1;
-
-        for (int i = 0; i < messages.length; i++) {
-            nbtTagCompound1 = new NBTTagCompound();
-            nbtTagCompound1.setString("text", messages[i]);
-            nbtTagCompound1.setInteger("color", 0x000000);
-            nbtTagList.appendTag(nbtTagCompound1);
-        }
-
-        nbtTagCompound.setTag("messages", nbtTagList);
-
-        overlayAlerts.add(nbtTagCompound);
-    }
 
     public void DrawWindow(int x, int y, int w, int h, int bgColor) {
         drawRect(x - 3, y - 4, x + w + 3, y - 3, bgColor);

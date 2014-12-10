@@ -29,51 +29,14 @@ public class GuiOverlayWindow extends Gui {
             return;
         }
 
-        // If there are no overlays to show, exit...
-        if (OverlayHelper.overlayAlerts.isEmpty()) {
-            return;
-        }
-
-        // If game is paused
-        if (Minecraft.getMinecraft().isGamePaused()) {
-            return;
-        }
-
-        // mc.thePlayer.worldObj.getTotalWorldTime();
-
         // Get the first message to display
-        NBTTagCompound nbtTagCompound = OverlayHelper.overlayAlerts.get(0);
+        NBTTagCompound nbtTagCompound = OverlayHelper.overlayAlert;
+
+        if (nbtTagCompound.hasNoTags()) { return; }
 
         // Get the messages to display from the NBT tag
         NBTTagList nbtTagList = (NBTTagList)nbtTagCompound.getTag("messages");
 
-        // Create Message Age Tag
-        if (!nbtTagCompound.hasKey("messageAge")) {
-
-            nbtTagCompound.setInteger("messageAge", 0);
-        }
-
-        int messageAge = nbtTagCompound.getInteger("messageAge");
-
-        // Handle Message Age
-        if (!nbtTagCompound.hasKey("messageMaxAge")) {
-            nbtTagCompound.setInteger("messageMaxAge", 400);
-        }
-        if (messageAge >= nbtTagCompound.getInteger("messageMaxAge")) {
-            overlayHelper.overlayAlerts.remove(0);
-            return;
-        } else{
-            messageAge++;
-            nbtTagCompound.setInteger("messageAge", messageAge);
-        }
-
-        // Set firework off at 40
-        if (messageAge < 40) {
-            // Cooldown on message
-            return;
-        } else if (messageAge == 40) {
-            FireworkHelper.SpawnFireWork();
-        }
 
         // Get Screen Resolution
         int screenWidth = event.resolution.getScaledWidth();
