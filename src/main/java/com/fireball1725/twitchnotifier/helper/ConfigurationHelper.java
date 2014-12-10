@@ -36,4 +36,10 @@ public class ConfigurationHelper {
 		property.comment = comment + " [default: " + defaultValue + "]";
 		return property.getInt(defaultValue);
 	}
+
+	public static int[] getInt(Configuration configuration, String name, String category, int[] defaultValue, String comment) {
+		Property property = configuration.get(category, name, defaultValue);
+		property.comment = comment;
+		return property.getIntList();
+	}
 }

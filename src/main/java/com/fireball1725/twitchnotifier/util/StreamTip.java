@@ -1,7 +1,7 @@
 package com.fireball1725.twitchnotifier.util;
 
+import com.fireball1725.twitchnotifier.config.ConfigStreamTipSettings;
 import com.fireball1725.twitchnotifier.lib.Log;
-import com.fireball1725.twitchnotifier.reference.StreamTipSettings;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -9,10 +9,10 @@ import org.json.JSONObject;
 
 public class StreamTip {
 	public boolean Init() {
-		if (!StreamTipSettings.STREAM_TIP_ENABLE) { return false; }
+		if (!ConfigStreamTipSettings.streamTipEnabled) { return false; }
 
 		IO.Options options = new IO.Options();
-		options.query = "client_id=" + StreamTipSettings.STREAM_TIP_CLIENT_ID + "&access_token=" + StreamTipSettings.STREAM_TIP_ACCESS_TOKEN;
+		options.query = "client_id=" + ConfigStreamTipSettings.streamTipClientID + "&access_token=" + ConfigStreamTipSettings.streamTipAccessToken;
 
 		try {
 			Socket socket = IO.socket("https://streamtip.com", options);
@@ -46,6 +46,8 @@ public class StreamTip {
 						tipFrom = newTip.getString("username");
 						tipMessage = newTip.getString("note");
 					} catch (Exception ex) {
+						Log.fatal("Error while parsing new tip");
+						Log.fatal(ex);
 					}
 
 					Log.info("New TIP => From: " + tipFrom + " Amount: " + tipAmount + " Note: " + tipMessage);
