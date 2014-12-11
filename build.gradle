@@ -17,14 +17,23 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0"
+version = "${config.mod_version}"
 group= "com.fireball1725.twitchnotifier" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+archivesBaseName = "TwitchNotifier"
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
-    runDir = "eclipse"
+    version = "${config.minecraft_version}-${config.forge_version}"
+    assetDir = "eclipse/assets"
+
+    replaceIn "lib/Reference.java"
+    replace "@VERSION@", "${config.mod_version}-b"+buildversion
+    replace "@BUILDNUMBER@", buildversion
+
+    replaceIn "TwitchNotifier.java"
+    replace "@DEBUG@", "somethingthatisnot-@DEBUG@"
 }
+
+version = "${config.minecraft_version}-"+version+"-b"+buildversion
 
 configurations {
     shade
@@ -76,5 +85,26 @@ processResources
         exclude 'mcmod.info'
     }
 }
+
+//Add universal identifier to jar name
+jar {
+    classifier = 'universal'
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'source'
+}
+
+artifacts {
+    archives deobfJar
+}
+
+build.dependsOn sourceJar
 
 
