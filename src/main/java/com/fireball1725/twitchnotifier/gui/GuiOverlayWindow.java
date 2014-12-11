@@ -1,5 +1,6 @@
 package com.fireball1725.twitchnotifier.gui;
 
+import com.fireball1725.twitchnotifier.config.ConfigAlertBoxSettings;
 import com.fireball1725.twitchnotifier.helper.FireworkHelper;
 import com.fireball1725.twitchnotifier.helper.MathHelper;
 import com.fireball1725.twitchnotifier.helper.OverlayHelper;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
+import sun.security.krb5.Config;
 
 @SideOnly(Side.CLIENT)
 public class GuiOverlayWindow extends Gui {
@@ -64,7 +66,7 @@ public class GuiOverlayWindow extends Gui {
         int windowWidth = MathHelper.getLargestInt(messageLength);
         int windowLeft = MathHelper.getSmallestInt(messageLeft);
 
-        overlayHelper.DrawWindowWithBorder(windowLeft, messageStartY, windowWidth, nbtTagList.tagCount() * 12, 0xF0100010, 0xFF00CC00);
+        overlayHelper.DrawWindowWithBorder(windowLeft, messageStartY, windowWidth, nbtTagList.tagCount() * 12, ConfigAlertBoxSettings.alertBox_BackgroundColor, ConfigAlertBoxSettings.alertBox_BorderColor);
 
         for (int i = 0; i < nbtTagList.tagCount(); i++) {
             NBTTagCompound messageTag = nbtTagList.getCompoundTagAt(i);
@@ -74,7 +76,7 @@ public class GuiOverlayWindow extends Gui {
             int messageX = (screenWidth >> 1) - (messageWidth >> 1);
             int messageY = messageStartY + (i * 12);
 
-            this.mc.fontRenderer.drawStringWithShadow(message, messageX, messageY + 2, 0x00CC00);
+            this.mc.fontRenderer.drawStringWithShadow(message, messageX, messageY + 2, ConfigAlertBoxSettings.alertBox_TextColor);
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

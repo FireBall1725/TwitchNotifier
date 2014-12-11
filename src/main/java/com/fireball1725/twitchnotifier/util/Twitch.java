@@ -17,9 +17,6 @@ public class Twitch {
     public static final URL TWITCH_SUB_URL;
     public static final URL TWITCH_FOLLOWER_URL;
 
-    public static String twitchLastSubscriberID;
-    public static String twitchLastFollowerID;
-
     public static ArrayList<String> twitchSubscribers = new ArrayList<String>();
     public static ArrayList<String> twitchFollowers = new ArrayList<String>();
     public static boolean twitchInitSubscribers = true;
@@ -28,7 +25,7 @@ public class Twitch {
     static {
         URL tempURL;
         try {
-            tempURL = new URL("https://api.twitch.tv/kraken/channels/" + ConfigTwitchSettings.twitchChannelName + "/subscriptions?limit=" + Integer.toString(1) + "&direction=desc&oauth_token=" + ConfigTwitchSettings.twitchOAuthToken);
+            tempURL = new URL("https://api.twitch.tv/kraken/channels/" + ConfigTwitchSettings.twitchChannelName + "/subscriptions?limit=" + Integer.toString(ConfigTwitchSettings.twitchQueryLength) + "&direction=desc&oauth_token=" + ConfigTwitchSettings.twitchOAuthToken);
         } catch (Exception ex) {
             Log.fatal("Failed to create URL!");
             Log.fatal(ex);
@@ -40,7 +37,7 @@ public class Twitch {
     static {
         URL tempURL;
         try {
-            tempURL = new URL("https://api.twitch.tv/kraken/channels/" + ConfigTwitchSettings.twitchChannelName + "/follows?limit=" + Integer.toString(1) + "&direction=desc&oauth_token=" + ConfigTwitchSettings.twitchOAuthToken);
+            tempURL = new URL("https://api.twitch.tv/kraken/channels/" + ConfigTwitchSettings.twitchChannelName + "/follows?limit=" + Integer.toString(ConfigTwitchSettings.twitchQueryLength) + "&direction=desc&oauth_token=" + ConfigTwitchSettings.twitchOAuthToken);
         } catch (Exception ex) {
             Log.fatal("Failed to create URL!");
             Log.fatal(ex);
