@@ -1,5 +1,6 @@
 package com.fireball1725.twitchnotifier;
 
+import com.fireball1725.twitchnotifier.configwindow.ConfigButtonInjector;
 import com.fireball1725.twitchnotifier.events.TickEvents;
 import com.fireball1725.twitchnotifier.config.ConfigurationFile;
 import com.fireball1725.twitchnotifier.helper.NotificationHelper;
@@ -36,6 +37,8 @@ public class TwitchNotifier {
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
+		ConfigButtonInjector.registerInjector();
+
 		new TickEvents();
 
 		StreamTip streamTip = new StreamTip();

@@ -41,7 +41,7 @@ archivesBaseName = "TwitchNotifier"
 
 minecraft {
     version = "${config.minecraft_version}-${config.forge_version}"
-    assetDir = "eclipse/assets"
+    runDir = "eclipse"
 
     replaceIn "lib/Reference.java"
     replace "@VERSION@", "${config.mod_version}-b"+buildversion
