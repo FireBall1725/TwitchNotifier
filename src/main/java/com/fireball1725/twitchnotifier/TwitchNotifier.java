@@ -1,6 +1,7 @@
 package com.fireball1725.twitchnotifier;
 
 import com.fireball1725.twitchnotifier.configwindow.ConfigButtonInjector;
+import com.fireball1725.twitchnotifier.events.GuiEvents;
 import com.fireball1725.twitchnotifier.events.TickEvents;
 import com.fireball1725.twitchnotifier.config.ConfigurationFile;
 import com.fireball1725.twitchnotifier.helper.NotificationHelper;
@@ -15,6 +16,7 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 import java.util.Random;
@@ -35,6 +37,7 @@ public class TwitchNotifier {
 		configuration = ConfigurationFile.init(event.getSuggestedConfigurationFile());
 
 		//MinecraftForge.EVENT_BUS.register(new PlayerEvents());
+		MinecraftForge.EVENT_BUS.register(new GuiEvents());
 	}
 
 	@Mod.EventHandler

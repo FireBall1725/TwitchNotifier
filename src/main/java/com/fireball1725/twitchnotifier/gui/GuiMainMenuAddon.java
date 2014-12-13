@@ -3,8 +3,10 @@ package com.fireball1725.twitchnotifier.gui;
 import com.fireball1725.twitchnotifier.TwitchNotifier;
 import com.fireball1725.twitchnotifier.config.TwitchNotifierConfig;
 import com.fireball1725.twitchnotifier.lib.Log;
+import com.fireball1725.twitchnotifier.lib.Reference;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.IModGuiFactory;
+import cpw.mods.fml.common.Loader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -62,5 +64,14 @@ public class GuiMainMenuAddon extends GuiMainMenu {
 
     public static void onActionPerformed(Minecraft mc, GuiScreen screen) {
         Log.debug("Config Button Clicked");
+
+        try {
+            IModGuiFactory guiFactory = FMLClientHandler.instance().getGuiFactoryFor(Loader.instance().getIndexedModList().get(Reference.MOD_ID));
+            GuiScreen newScreen = guiFactory.mainConfigGuiClass().getConstructor(TwitchNotifierConfig.class).newInstance(screen);
+            mc.displayGuiScreen(newScreen);
+        } catch (Exception ex) {
+            Log.fatal("Error showing Configuration Screen");
+            Log.fatal(ex);
+        }
     }
 }
