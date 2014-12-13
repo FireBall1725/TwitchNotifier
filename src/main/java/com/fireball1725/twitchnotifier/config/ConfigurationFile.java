@@ -21,7 +21,8 @@ public class ConfigurationFile {
 
 	public static void loadConfiguration() {
 		// StreamTip Settings
-		configuration.addCustomCategoryComment("streamtip", "StreamTip Settings");
+		configuration.setCategoryLanguageKey("streamtip", "config.streamtip");
+		configuration.setCategoryRequiresMcRestart("streamtip", true);
 		ConfigStreamTipSettings.streamTipEnabled = ConfigurationHelper.getBoolean(configuration, "Enable StreamTip", "streamtip", false, "Enable StreamTip Integration");
 		ConfigStreamTipSettings.streamTipClientID = ConfigurationHelper.getString(configuration, "StreamTip API ClientID", "streamtip", "", "API Client ID for StreamTip", false);
 		ConfigStreamTipSettings.streamTipAccessToken = ConfigurationHelper.getString(configuration, "StreamTip API Access Token", "streamtip", "", "API Access Token for StreamTip", false);
@@ -31,7 +32,8 @@ public class ConfigurationFile {
 		ConfigStreamTipSettings.streamTipNotificationMessage = ConfigurationHelper.getString(configuration, "Notification Message", "streamtip", "New Tip!%%%USERNAME% Just donated %AMOUNT%!%%Message: %MESSAGE%", "Message shown on Alert Box (See readme for variables)", true);
 
 		// Twitch Settings
-		configuration.addCustomCategoryComment("twitch", "Twitch Settings");
+		configuration.setCategoryLanguageKey("twitch", "config.twitch");
+		configuration.setCategoryRequiresMcRestart("twitch", true);
 		ConfigTwitchSettings.twitchEnabled = ConfigurationHelper.getBoolean(configuration, "Enable Twitch", "twitch", false, "Enable Twitch Integration");
 		ConfigTwitchSettings.twitchOAuthToken = ConfigurationHelper.getString(configuration, "oAuth Token", "twitch", "See readme for help getting oAuth token", "Twitch oAuth Token", false);
 		ConfigTwitchSettings.twitchCheckTimer = ConfigurationHelper.getInt(configuration, "Check Timer", "twitch", 3, "Number of seconds to check for new Twitch events");
@@ -45,7 +47,7 @@ public class ConfigurationFile {
 		ConfigTwitchSettings.twitchQueryLength = ConfigurationHelper.getInt(configuration, "Query Length", "twitch", 50, "How many records to get from twitch with each query");
 
 		// AlertBox Settings
-		configuration.addCustomCategoryComment("alertbox", "Alertbox Settings");
+		configuration.setCategoryLanguageKey("alertbox", "config.alertbox");
 		ConfigAlertBoxSettings.alertBox_CloseGUI = ConfigurationHelper.getBoolean(configuration, "Close GUI if open", "alertbox", true, "Close any open GUI Windows if there is a new Alert");
 		ConfigAlertBoxSettings.alertBox_CooldownTime = ConfigurationHelper.getInt(configuration, "Cool Down Timer", "alertbox", 2, "Cool down timer in seconds between alerts");
 		ConfigAlertBoxSettings.alertBox_ShowTime = ConfigurationHelper.getInt(configuration, "Time to show Alert", "alertbox", 8, "Time to show Alert in seconds");
@@ -54,9 +56,10 @@ public class ConfigurationFile {
 		ConfigAlertBoxSettings.alertBox_ShowBorder = ConfigurationHelper.getBoolean(configuration, "Show Border", "alertbox", true, "Show Border Color");
 		ConfigAlertBoxSettings.alertBox_BorderColor = ConfigurationHelper.getInt(configuration, "Border Color", "alertbox", 0xFF00CC00, "Border Color (argb)");
 		ConfigAlertBoxSettings.alertBox_TextColor = ConfigurationHelper.getInt(configuration, "Text Color", "alertbox", 0x00CC00, "Text Color (rgb)");
+		ConfigAlertBoxSettings.alertBox_BorderGradient = ConfigurationHelper.getBoolean(configuration, "Enable Border Gradient", "alertbox", true, "Render the border with a gradient");
 
 		// Firework Settings
-		configuration.addCustomCategoryComment("fireworks", "Fireworks Settings");
+		configuration.setCategoryLanguageKey("fireworks", "config.fireworks");
 		ConfigFireworkSettings.fireworkColors = ConfigurationHelper.getInt(configuration, "Firework Colors", "fireworks", ConfigFireworkSettings.FireworkColors_Default, "Firework Colors (rbg list)");
 		ConfigFireworkSettings.fireworkLocations = ConfigurationHelper.getInt(configuration, "Firework Locations", "fireworks", ConfigFireworkSettings.FireworkLocations_Default, "Firework Locations (Y Level to player)");
 

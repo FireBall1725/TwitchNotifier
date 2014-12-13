@@ -1,5 +1,6 @@
 package com.fireball1725.twitchnotifier.helper;
 
+import com.fireball1725.twitchnotifier.config.ConfigAlertBoxSettings;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -22,7 +23,12 @@ public class OverlayHelper extends Gui {
 
     public void DrawWindowWithBorder(int x, int y, int w, int h, int bgColor, int frameColor) {
         DrawWindow(x, y, w, h, bgColor);
-        int frameFade = frameColor;
+        int frameFade;
+        if (ConfigAlertBoxSettings.alertBox_BorderGradient) {
+            frameFade = (frameColor & 0xFEFEFE) >> 1 | frameColor & 0xFF000000;
+        } else {
+            frameFade = frameColor;
+        }
         drawGradientRect(x - 3, y - 3 + 1, x - 3 + 1, y + h + 3 - 1, frameColor, frameFade);
         drawGradientRect(x + w + 2, y - 3 + 1, x + w + 3, y + h + 3 - 1, frameColor, frameFade);
         drawGradientRect(x - 3, y - 3, x + w + 3, y - 3 + 1, frameColor, frameColor);

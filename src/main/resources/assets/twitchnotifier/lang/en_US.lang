@@ -1,0 +1,8 @@
+config.streamtip=StreamTip Settings
+config.streamtip.tooltip=Edit the StreamTip Options and Configurations
+config.twitch=Twitch Settings
+config.twitch.tooltip=Edit the Twitch Options and Configurations
+config.alertbox=Alert Box Settings
+config.alertbox.tooltip=Edit the Popup Alert Box Options
+config.fireworks=Firework Settings
+config.fireworks.tooltip=Edit the firework options and settings

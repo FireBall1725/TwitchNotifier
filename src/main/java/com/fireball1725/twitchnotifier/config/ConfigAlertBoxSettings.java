@@ -9,6 +9,7 @@ public class ConfigAlertBoxSettings {
 
     public static boolean alertBox_ShowBorder;
     public static int alertBox_BorderColor;
+    public static boolean alertBox_BorderGradient;
 
     public static int alertBox_TextColor;
 
