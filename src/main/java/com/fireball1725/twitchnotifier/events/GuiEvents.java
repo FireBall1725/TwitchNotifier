@@ -1,7 +1,5 @@
 package com.fireball1725.twitchnotifier.events;
 
-import com.fireball1725.twitchnotifier.config.TwitchNotifierConfig;
-import com.fireball1725.twitchnotifier.lib.Log;
 import com.fireball1725.twitchnotifier.lib.Reference;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.IModGuiFactory;
@@ -10,7 +8,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -21,7 +18,7 @@ public class GuiEvents {
     @SubscribeEvent
     public void onScreenInitPost(GuiScreenEvent.InitGuiEvent.Post event) {
         if (event.gui instanceof GuiOptions) {
-            event.buttonList.add(new GuiButton(1725, (event.gui.width / 2) - 155, (event.gui.height / 2) - 38, 150, 20, I18n.format("Twitch Notifier Settings...")));
+            event.buttonList.add(new GuiButton(1725, event.gui.width / 2 - 155, event.gui.height / 6 + 48 - 6, 150, 20, I18n.format("Twitch Notifier Settings...")));
         }
     }
 
