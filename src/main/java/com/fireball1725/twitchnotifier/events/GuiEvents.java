@@ -11,6 +11,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraftforge.client.event.GuiScreenEvent;
@@ -19,23 +20,21 @@ import net.minecraftforge.client.event.GuiScreenEvent;
 public class GuiEvents {
     @SubscribeEvent
     public void onScreenInitPost(GuiScreenEvent.InitGuiEvent.Post event) {
-        if (event.gui instanceof GuiMainMenu) {
-            event.buttonList.add(new GuiButton(1725, (event.gui.width / 2) - 35, event.gui.height - 25, 70, 20, I18n.format("gui.button.config")));
+        if (event.gui instanceof GuiOptions) {
+            event.buttonList.add(new GuiButton(1725, (event.gui.width / 2) - 155, (event.gui.height / 2) - 38, 150, 20, I18n.format("Twitch Notifier Settings...")));
         }
     }
 
     @SubscribeEvent
-    public void onButtonClickPre(GuiScreenEvent.ActionPerformedEvent.Pre event) {
-        if (event.gui instanceof GuiMainMenu) {
-            try {
-                IModGuiFactory guiFactory = FMLClientHandler.instance().getGuiFactoryFor(Loader.instance().getIndexedModList().get(Reference.MOD_ID));
-                GuiScreen newScreen = guiFactory.mainConfigGuiClass().getConstructor(TwitchNotifierConfig.class).newInstance();
-                event.gui.mc.displayGuiScreen(newScreen);
-            } catch (Exception ex) {
-                Log.fatal("Error showing Configuration Screen");
-                Log.fatal(ex);
+    public void onButtonClickPost(GuiScreenEvent.ActionPerformedEvent.Post event) {
+        if (event.gui instanceof GuiOptions) {
+            if (event.button.id == 1725) {
+                try {
+                    IModGuiFactory guiFactory = FMLClientHandler.instance().getGuiFactoryFor(Loader.instance().getIndexedModList().get(Reference.MOD_ID));
+                    GuiScreen newScreen = guiFactory.mainConfigGuiClass().getConstructor(GuiScreen.class).newInstance(event.gui);
+                    event.gui.mc.displayGuiScreen(newScreen);
+                } catch (Exception ex) {}
             }
-            event.setCanceled(true);
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.fireball1725.twitchnotifier;
 
-import com.fireball1725.twitchnotifier.configwindow.ConfigButtonInjector;
+import com.fireball1725.twitchnotifier.events.ConfigEvents;
 import com.fireball1725.twitchnotifier.events.GuiEvents;
 import com.fireball1725.twitchnotifier.events.TickEvents;
 import com.fireball1725.twitchnotifier.config.ConfigurationFile;
@@ -9,6 +9,7 @@ import com.fireball1725.twitchnotifier.lib.Log;
 import com.fireball1725.twitchnotifier.lib.Reference;
 import com.fireball1725.twitchnotifier.proxy.IProxy;
 import com.fireball1725.twitchnotifier.util.StreamTip;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -38,12 +39,11 @@ public class TwitchNotifier {
 
 		//MinecraftForge.EVENT_BUS.register(new PlayerEvents());
 		MinecraftForge.EVENT_BUS.register(new GuiEvents());
+		FMLCommonHandler.instance().bus().register(new ConfigEvents());
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
-		ConfigButtonInjector.registerInjector();
-
 		new TickEvents();
 
 		StreamTip streamTip = new StreamTip();
