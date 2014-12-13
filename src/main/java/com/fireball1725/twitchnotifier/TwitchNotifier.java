@@ -15,22 +15,24 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.config.Configuration;
 
 import java.util.Random;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION_BUILD)
+@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION_BUILD, guiFactory = Reference.GUI_FACTORY)
 public class TwitchNotifier {
 	@Mod.Instance
 	public static TwitchNotifier instance;
 
 	public static final Random random = new Random();
+	public static Configuration configuration;
 
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	public static IProxy proxy;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		ConfigurationFile.init(event.getSuggestedConfigurationFile());
+		configuration = ConfigurationFile.init(event.getSuggestedConfigurationFile());
 
 		//MinecraftForge.EVENT_BUS.register(new PlayerEvents());
 	}

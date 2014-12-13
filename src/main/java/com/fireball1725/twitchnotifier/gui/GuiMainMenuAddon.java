@@ -1,10 +1,15 @@
 package com.fireball1725.twitchnotifier.gui;
 
+import com.fireball1725.twitchnotifier.TwitchNotifier;
+import com.fireball1725.twitchnotifier.config.TwitchNotifierConfig;
+import com.fireball1725.twitchnotifier.lib.Log;
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.IModGuiFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import scala.collection.parallel.ParIterableLike;
+import net.minecraftforge.client.gui.ForgeGuiFactory;
 
 import java.util.List;
 
@@ -30,7 +35,7 @@ public class GuiMainMenuAddon extends GuiMainMenu {
         for (GuiButton button : buttonList)
             if (button instanceof GuiButtonConfig) return (GuiButtonConfig)button;
 
-        GuiButtonConfig buttonConfig = new GuiButtonConfig(BUTTON_CONFIG_ID, screen.width / 2 - 124, screen.height / 4 + 48 + 24 * 2);
+        GuiButtonConfig buttonConfig = new GuiButtonConfig(BUTTON_CONFIG_ID, screen.width / 2 + 104, screen.height / 4 + 48 + 28 * 3);
         buttonList.add(buttonConfig);
         return buttonConfig;
     }
@@ -42,7 +47,7 @@ public class GuiMainMenuAddon extends GuiMainMenu {
     }
 
     public static void onScreenDraw(GuiScreen screen) {
-        //screen.drawCenteredString(CompatiblityAdapter.getFontRenderer(), notification.getFormatted(), screen.width / 2, screen.height / 4 + 48 + 24 * 3, 0xFFFFFF);
+
     }
 
     @Override
@@ -56,6 +61,6 @@ public class GuiMainMenuAddon extends GuiMainMenu {
     }
 
     public static void onActionPerformed(Minecraft mc, GuiScreen screen) {
-        //
+        Log.debug("Config Button Clicked");
     }
 }

@@ -19,9 +19,10 @@ public class ConfigurationHelper {
 		return defaultValue;
 	}
 
-	public static String getString(Configuration configuration, String name, String category, String defaultValue, String comment) {
+	public static String getString(Configuration configuration, String name, String category, String defaultValue, String comment, boolean show) {
 		Property property = configuration.get(category, name, defaultValue);
 		property.comment = comment + " [default: " + defaultValue + "]";
+		property.setShowInGui(show);
 	    return property.getString();
 	}
 

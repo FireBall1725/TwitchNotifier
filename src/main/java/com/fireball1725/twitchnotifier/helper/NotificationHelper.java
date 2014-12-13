@@ -94,6 +94,8 @@ public class NotificationHelper {
      */
     public static void updateTick() {
         if (Minecraft.getMinecraft().isGamePaused()) { return; }
+        if (Minecraft.getMinecraft().thePlayer == null) { return; }
+        if (Minecraft.getMinecraft().thePlayer.worldObj == null) { return; }
 
         if (getNotificationCount() == 0) { return; }
 
