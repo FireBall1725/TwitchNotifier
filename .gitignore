@@ -7,7 +7,11 @@
 !/gradlew.bat
 !/README.md
 !/License.txt
+!/LICENSE
 !/build.gradle
 !/build.properties
 !/build.bat
 !/build.sh
+!/gradle.properties
+!/webresources
+.DS_Store
