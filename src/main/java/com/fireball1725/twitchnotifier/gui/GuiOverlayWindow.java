@@ -4,15 +4,15 @@ import com.fireball1725.twitchnotifier.config.ConfigAlertBoxSettings;
 import com.fireball1725.twitchnotifier.helper.FireworkHelper;
 import com.fireball1725.twitchnotifier.helper.MathHelper;
 import com.fireball1725.twitchnotifier.helper.OverlayHelper;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import sun.security.krb5.Config;
 
@@ -27,7 +27,7 @@ public class GuiOverlayWindow extends Gui {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void afterRenderGameOverlayEvent(RenderGameOverlayEvent.Post event) {
-        if (event.type != RenderGameOverlayEvent.ElementType.ALL) {
+        if (event.getType() != RenderGameOverlayEvent.ElementType.ALL) {
             return;
         }
 
@@ -41,8 +41,8 @@ public class GuiOverlayWindow extends Gui {
 
 
         // Get Screen Resolution
-        int screenWidth = event.resolution.getScaledWidth();
-        int screenHeight = event.resolution.getScaledHeight();
+        int screenWidth = event.getResolution().getScaledWidth();
+        int screenHeight = event.getResolution().getScaledHeight();
 
         // Reset GL Colors
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -56,7 +56,7 @@ public class GuiOverlayWindow extends Gui {
             NBTTagCompound messageTag = nbtTagList.getCompoundTagAt(i);
             String message = messageTag.getString("text");
 
-            int messageWidth = this.mc.fontRenderer.getStringWidth(message);
+            int messageWidth = this.mc.fontRendererObj.getStringWidth(message);
             int messageX = (screenWidth >> 1) - (messageWidth >> 1);
 
             messageLength[i] = messageWidth;
@@ -72,11 +72,11 @@ public class GuiOverlayWindow extends Gui {
             NBTTagCompound messageTag = nbtTagList.getCompoundTagAt(i);
             String message = messageTag.getString("text");
 
-            int messageWidth = this.mc.fontRenderer.getStringWidth(message);
+            int messageWidth = this.mc.fontRendererObj.getStringWidth(message);
             int messageX = (screenWidth >> 1) - (messageWidth >> 1);
             int messageY = messageStartY + (i * 12);
 
-            this.mc.fontRenderer.drawStringWithShadow(message, messageX, messageY + 2, ConfigAlertBoxSettings.alertBox_TextColor);
+            this.mc.fontRendererObj.drawStringWithShadow(message, messageX, messageY + 2, ConfigAlertBoxSettings.alertBox_TextColor);
         }
 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);

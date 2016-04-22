@@ -1,7 +1,9 @@
 package com.fireball1725.twitchnotifier.proxy;
 
 public interface IProxy {
-	public abstract void registerEvents();
+	void registerEvents();
 
-	public abstract void registerGuis();
+	void registerGuis();
+
+	void registerConnectionEvents();
 }

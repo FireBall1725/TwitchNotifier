@@ -9,7 +9,7 @@ public class ConfigStreamTipSettings {
     public static boolean streamTipShowFireworks;
     public static boolean streamTipShowAlertBox;
 
-    public static int streamTipMinAmmountForAlert;
+    public static int streamTipMinAmountForAlert;
 
     public static String streamTipNotificationMessage;
 }

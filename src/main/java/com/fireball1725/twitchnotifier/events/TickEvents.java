@@ -4,10 +4,10 @@ import com.fireball1725.twitchnotifier.config.ConfigTwitchSettings;
 import com.fireball1725.twitchnotifier.helper.NotificationHelper;
 import com.fireball1725.twitchnotifier.lib.Log;
 import com.fireball1725.twitchnotifier.util.Twitch;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class TickEvents {
     private static final int UPDATE_TIME = ConfigTwitchSettings.twitchCheckTimer * 20;

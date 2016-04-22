@@ -2,9 +2,9 @@ package com.fireball1725.twitchnotifier.config;
 
 import com.fireball1725.twitchnotifier.helper.ConfigurationHelper;
 import com.fireball1725.twitchnotifier.lib.Reference;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ public class ConfigurationFile {
 		ConfigStreamTipSettings.streamTipEnabled = ConfigurationHelper.getBoolean(configuration, "Enable StreamTip", "streamtip", false, "Enable StreamTip Integration");
 		ConfigStreamTipSettings.streamTipClientID = ConfigurationHelper.getString(configuration, "StreamTip API ClientID", "streamtip", "", "API Client ID for StreamTip", false);
 		ConfigStreamTipSettings.streamTipAccessToken = ConfigurationHelper.getString(configuration, "StreamTip API Access Token", "streamtip", "", "API Access Token for StreamTip", false);
-		ConfigStreamTipSettings.streamTipMinAmmountForAlert = ConfigurationHelper.getInt(configuration, "Minimum Amount for Alert", "streamtip", 1, "Minimum Amount for Alert to Show");
+		ConfigStreamTipSettings.streamTipMinAmountForAlert = ConfigurationHelper.getInt(configuration, "Minimum Amount for Alert", "streamtip", 1, "Minimum Amount for Alert to Show");
 		ConfigStreamTipSettings.streamTipShowFireworks = ConfigurationHelper.getBoolean(configuration, "Show Fireworks", "streamtip", true, "Show Fireworks on new StreamTip");
 		ConfigStreamTipSettings.streamTipShowAlertBox = ConfigurationHelper.getBoolean(configuration, "Show Alert Box", "streamtip", true, "Show Alert Box on new StreamTip");
 		ConfigStreamTipSettings.streamTipNotificationMessage = ConfigurationHelper.getString(configuration, "Notification Message", "streamtip", "New Tip!%%%USERNAME% Just donated %AMOUNT%!%%Message: %MESSAGE%", "Message shown on Alert Box (See readme for variables)", true);
@@ -63,6 +63,12 @@ public class ConfigurationFile {
 		ConfigFireworkSettings.fireworkColors = ConfigurationHelper.getInt(configuration, "Firework Colors", "fireworks", ConfigFireworkSettings.FireworkColors_Default, "Firework Colors (rbg list)");
 		ConfigFireworkSettings.fireworkLocations = ConfigurationHelper.getInt(configuration, "Firework Locations", "fireworks", ConfigFireworkSettings.FireworkLocations_Default, "Firework Locations (Y Level to player)");
 
+		// Spawn Block Settings
+		configuration.setCategoryLanguageKey("spawnblock", "config.spawnblock");
+		ConfigBlockSpawnSettings.spawn_block_enabled = ConfigurationHelper.getBoolean(configuration, "Enabled", "spawnblock", false, "Spawn a block when events happen");
+		ConfigBlockSpawnSettings.spawn_block_blockNames = ConfigurationHelper.getString(configuration, "Block Names", "spawnblock", ConfigBlockSpawnSettings.spawn_block_blockNames_default, "List of block names (ex: minecraft:dirt)");
+		ConfigBlockSpawnSettings.spawn_block_waitTime = ConfigurationHelper.getInt(configuration, "Wait Time (sec)", "spawnblock", 1, "Time to wait before spawning block (in seconds)");
+
 		if (configuration.hasChanged()) {
 			configuration.save();
 		}
@@ -70,7 +76,7 @@ public class ConfigurationFile {
 
 	@SubscribeEvent
 	public void onConfigurationChangedEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.modID.equalsIgnoreCase(Reference.MOD_ID)) {
+		if (event.getModID().equalsIgnoreCase(Reference.MOD_ID)) {
 			loadConfiguration();
 		}
 	}
