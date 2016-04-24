@@ -137,7 +137,7 @@ public class NotificationHelper {
             alertboxNotificationTime = 0;
         }
 
-        int maxNotificationTime = (alertboxNotificationTime + Math.max(ConfigAlertBoxSettings.alertBox_CooldownTime, ConfigBlockSpawnSettings.spawn_block_waitTime)) * 20;
+        int maxNotificationTime = (Math.max(alertboxNotificationTime + ConfigAlertBoxSettings.alertBox_CooldownTime, ConfigBlockSpawnSettings.spawn_block_waitTime)) * 20;
 
         // Check to see if notification has an age, if not create it
         if (!nbtTagCompound.hasKey("messageAge")) {
