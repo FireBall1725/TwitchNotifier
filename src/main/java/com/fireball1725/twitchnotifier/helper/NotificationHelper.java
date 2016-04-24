@@ -1,6 +1,7 @@
 package com.fireball1725.twitchnotifier.helper;
 
 import com.fireball1725.twitchnotifier.config.ConfigAlertBoxSettings;
+import com.fireball1725.twitchnotifier.config.ConfigBlockSpawnSettings;
 import com.fireball1725.twitchnotifier.lib.Log;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import net.minecraft.client.Minecraft;
@@ -57,6 +58,7 @@ public class NotificationHelper {
         notificationTag.setTag("messages", messages);
         notificationTag.setBoolean("showFireworks", showFireworks);
         notificationTag.setBoolean("showAlertbox", showAlertBox);
+        notificationTag.setBoolean("spawnBlock", ConfigBlockSpawnSettings.spawn_block_enabled);
 
         addNotification(notificationTag);
     }
@@ -104,6 +106,8 @@ public class NotificationHelper {
         boolean showAlertBox = false;
         boolean showFireworks = false;
         int alertboxNotificationTime = ConfigAlertBoxSettings.alertBox_ShowTime;
+        boolean spawnBlock = false;
+        int spawnBlockWaitTime = ConfigBlockSpawnSettings.spawn_block_waitTime;
 
         // Get if we are showing the fireworks
         if (nbtTagCompound.hasKey("showFireworks")) {
@@ -120,11 +124,20 @@ public class NotificationHelper {
             alertboxNotificationTime = nbtTagCompound.getInteger("alertboxShowTime");
         }
 
+        // Get if we are spawning a Block
+        if (nbtTagCompound.hasKey("spawnBlock")) {
+            spawnBlock = nbtTagCompound.getBoolean("spawnBlock");
+        }
+
+        if (nbtTagCompound.hasKey("spawnBlockWaitTime")) {
+            spawnBlockWaitTime = nbtTagCompound.getInteger("spawnBlockWaitTime");
+        }
+
         if (!showAlertBox) {
             alertboxNotificationTime = 0;
         }
 
-        int maxNotificationTime = (alertboxNotificationTime + ConfigAlertBoxSettings.alertBox_CooldownTime) * 20;
+        int maxNotificationTime = (alertboxNotificationTime + Math.max(ConfigAlertBoxSettings.alertBox_CooldownTime, ConfigBlockSpawnSettings.spawn_block_waitTime)) * 20;
 
         // Check to see if notification has an age, if not create it
         if (!nbtTagCompound.hasKey("messageAge")) {
@@ -143,6 +156,10 @@ public class NotificationHelper {
 
         if (showAlertBox && messageAge >= alertboxNotificationTime * 20) {
             OverlayHelper.overlayAlert = new NBTTagCompound();
+        }
+
+        if (spawnBlock && messageAge == spawnBlockWaitTime * 20) {
+            SpawnBlockHelper.SpawnBlock();
         }
 
         if (messageAge >= maxNotificationTime) {
