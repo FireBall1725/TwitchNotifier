@@ -1,14 +1,18 @@
 package com.fireball1725.twitchnotifier.helper;
 
 import com.fireball1725.twitchnotifier.config.ConfigAlertBoxSettings;
+import com.fireball1725.twitchnotifier.config.ConfigBlockSpawnSettings;
 import com.fireball1725.twitchnotifier.lib.Log;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class NotificationHelper {
     private static List<NBTTagCompound> overlayAlerts = new ArrayList<NBTTagCompound>();
@@ -136,6 +140,31 @@ public class NotificationHelper {
 
             if (showAlertBox) {
                 OverlayHelper.overlayAlert = nbtTagCompound;
+            }
+
+            // Spawn block code
+            int possibleBlocks = ConfigBlockSpawnSettings.spawn_block_blockNames.length;
+            Random rnd = new Random();
+            int selectedBlock = rnd.nextInt(possibleBlocks);
+
+            String blockName = ConfigBlockSpawnSettings.spawn_block_blockNames[selectedBlock];
+
+            blockName = blockName.trim();
+
+            String[] test = blockName.split(" ");
+
+            Block block = Block.getBlockFromName(test[0]);
+            if (block != null) {
+
+                ItemStack itemStack;
+                if (test.length > 1) {
+                    int blockMeta = Integer.parseInt(test[1]);
+                    itemStack = new ItemStack(block, 1, blockMeta);
+                } else {
+                    itemStack = new ItemStack(block);
+                }
+
+                BlockSpawnHelper.addSpawnBlock(itemStack.copy());
             }
         }
 

@@ -6,3 +6,5 @@ config.alertbox=Alert Box Settings
 config.alertbox.tooltip=Edit the Popup Alert Box Options
 config.fireworks=Firework Settings
 config.fireworks.tooltip=Edit the firework options and settings
+config.spawnblock=Spawn Block Settings
+config.spawnblock.tooltip=Edit the spawn block options and settings
