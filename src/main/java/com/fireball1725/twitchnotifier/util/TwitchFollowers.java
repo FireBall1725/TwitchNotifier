@@ -77,7 +77,7 @@ public class TwitchFollowers implements Runnable {
             checking = false;
             Twitch.twitchInitFollowers = false;
         } catch (Exception ex) {
-            Log.fatal("Unexpected error checking subscription info");
+            Log.fatal("Unexpected error checking follower info");
             Log.fatal(ex);
         }
 
